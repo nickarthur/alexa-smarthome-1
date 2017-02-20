@@ -1,0 +1,4 @@
+node_modules
+devicemanager/node_modules
+middleware/node_modules
+lambda/node_modules
