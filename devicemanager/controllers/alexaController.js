@@ -1,5 +1,3 @@
-var deviceModel = require('../models/deviceModel.js');
-
 /**
  * deviceController.js
  *
@@ -48,13 +46,13 @@ module.exports = {
      */
     create: function (req, res) {
         var device = new deviceModel({
-			applianceId : req.body.applianceId,
-			manufacturerName : req.body.manufacturerName,
-			version : req.body.version,
-			friendlyName : req.body.friendlyName,
-			friendlyDescription : req.body.friendlyDescription,
-			isReachable : req.body.isReachable,
-			additionalApplianceDetails : req.body.additionalApplianceDetails
+            applianceId : req.body.applianceId,
+            manufacturerName : req.body.manufacturerName,
+            version : req.body.version,
+            friendlyName : req.body.friendlyName,
+            friendlyDescription : req.body.friendlyDescription,
+            isReachable : req.body.isReachable,
+            additionalApplianceDetails : req.body.additionalApplianceDetails
         });
 
         device.save(function (err, device) {
@@ -87,13 +85,13 @@ module.exports = {
             }
 
             device.applianceId = req.body.applianceId ? req.body.applianceId : device.applianceId;
-			device.manufacturerName = req.body.manufacturerName ? req.body.manufacturerName : device.manufacturerName;
-			device.version = req.body.version ? req.body.version : device.version;
-			device.friendlyName = req.body.friendlyName ? req.body.friendlyName : device.friendlyName;
-			device.friendlyDescription = req.body.friendlyDescription ? req.body.friendlyDescription : device.friendlyDescription;
-			device.isReachable = req.body.isReachable ? req.body.isReachable : device.isReachable;
-			device.additionalApplianceDetails = req.body.additionalApplianceDetails ? req.body.additionalApplianceDetails : device.additionalApplianceDetails;
-			
+            device.manufacturerName = req.body.manufacturerName ? req.body.manufacturerName : device.manufacturerName;
+            device.version = req.body.version ? req.body.version : device.version;
+            device.friendlyName = req.body.friendlyName ? req.body.friendlyName : device.friendlyName;
+            device.friendlyDescription = req.body.friendlyDescription ? req.body.friendlyDescription : device.friendlyDescription;
+            device.isReachable = req.body.isReachable ? req.body.isReachable : device.isReachable;
+            device.additionalApplianceDetails = req.body.additionalApplianceDetails ? req.body.additionalApplianceDetails : device.additionalApplianceDetails;
+
             device.save(function (err, device) {
                 if (err) {
                     return res.status(500).json({
@@ -121,8 +119,5 @@ module.exports = {
             }
             return res.status(204).json();
         });
-    },
-    conntrol: function () {
-
-    },
+    }
 };

@@ -1,16 +1,17 @@
 var express = require('express');
 var router = express.Router();
-// var DeviceManager = require('../lib/devicemanager.js');
+var ResponseFactory = require("../lib/ResponseFactory");
+var alexaActions = new (require("../lib/AlexaActions"));
+
 
 /* GET devices listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 
-router.get('/discover', function(req, res, next) {
-    console.log("discovering devices");
-    // console.log(req.app.settings.deviceManager.getConnectedDevices());
+router.get('/list', function(req, res, next) {
     var devices = req.app.settings.deviceManager.getConnectedDevices();
+    console.log("discovering devices");
     var discoveredApps = [];
     var AlexaDiscoveredArr = [];
     Object.keys(devices).forEach(function (device) {
@@ -23,9 +24,14 @@ router.get('/discover', function(req, res, next) {
             manufacturerName: 'Some Device',
             modelName: 'ST01',
             version: 'VER01',
-            friendlyName: 'Dummy light',
+            friendlyName: 'Monkey',
             friendlyDescription: 'the light in kitchen',
             isReachable: true,
+            actions: [
+                'turnOff',
+                'turnOn'
+            ]
+            ,
             additionalApplianceDetails: {
                 /**
                  * OPTIONAL:
@@ -40,8 +46,17 @@ router.get('/discover', function(req, res, next) {
     res.send(AlexaDiscoveredArr);
 });
 
-router.get('/control', function(req, res, next) {
-    res.send('respond with a resource');
+router.get('/list', function(req, res, next) {
+    console.log("discovering devices");
+    req.app.settings.deviceManager.getConnectedDevices();
+    res.send(AlexaDiscoveredArr);
+});
+
+router.get('/control/:deviceid/action/:action/params', function(req, res, next) {
+    var devices = req.app.settings.deviceManager.getConnectedDevices();
+    var response = (devices[req.params.deviceid]).adapter[alexaActions.getActionMethod(req.params.action)](function (response) {
+        res.send(ResponseFactory(req.params,req.query,response));
+    });
 });
 
 module.exports = router;
